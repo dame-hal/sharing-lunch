@@ -1,0 +1,9 @@
+version: '3'
+services:
+  vue-app:
+    build: ./.devenv-vue
+    ports:  # ローカルホストURL: http://localhost:8080/
+      - '8001:8080'
+    volumes:  # 共有するディレクトリをマウント
+      - ./app:/home/nodeuser/sharing-lunch
+    container_name: sharing-lunch
