@@ -12,4 +12,5 @@ docker-compose up -d
 
 echo ''
 echo '----------------'
-echo 'URL: http://localhost:8080/'
+echo '下記URLから開発環境にアクセスしてください'
+echo 'URL: http://0.0.0.0:8081/'
