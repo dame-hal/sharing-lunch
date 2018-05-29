@@ -10,4 +10,4 @@ $ ./start.command
 ```
 
 ## How to access localhost
-ローカル開発環境のURLは`http:0.0.0.0:8081`です。
+ローカル開発環境のURLは`http://0.0.0.0:8081`です。
