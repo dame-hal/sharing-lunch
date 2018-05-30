@@ -1,8 +1,8 @@
 version: '3'
 services:
   vue-app:
-    build: ./.devenv-vue
-    ports:  # ローカルホストURL: http://localhost:8080/
+    image: damehal/devenv-vuecli
+    ports:  # ローカルホストURL: http://localhost:8081/
       - "8081:8080"
     volumes:  # 共有するディレクトリをマウント
       - ./app:/home/nodeuser/sharing-lunch
