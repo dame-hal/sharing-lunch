@@ -7,4 +7,4 @@ services:
     volumes:  # 共有するディレクトリをマウント
       - ./app:/home/nodeuser/sharing-lunch
     container_name: sharing-lunch
-    command: bash -c "cd sharing-lunch && npm run dev"
+    command: /bin/bash -c "cd sharing-lunch && npm run dev"
