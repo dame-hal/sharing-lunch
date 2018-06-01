@@ -21,3 +21,6 @@ $ ./start.command
 
 ### DockerHub
 - URL: https://github.com/dame-hal/devenv-vuecli
+
+## 検証方法
+- テストコードを書いてあるので、更新時はCIツール上でテストを実施します。
