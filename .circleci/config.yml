@@ -9,14 +9,21 @@ jobs:
     steps:
       - checkout
       - run:
+        name: Notification to Slack "Build Started"
+        command: |
+          PAYLOAD=`cat << EOS
+          {
+            "channel": "#alert-circleci",
+            "text": "Build Started",
+          }
+          EOS
+          `
+          curl -X POST --data-urlencode "payload=$PAYLOAD" $SLACK_WEBHOOK_URL
+
+      - run:
           name: Test echo
           command: echo 'hello CircleCI'
-      - run:
-          name: Test pwd
-          command: pwd
-      - run:
-          name: Test ls
-          command: ls -la
+
       # Download and cache dependencies
 #      - restore_cache:
 #          keys:
