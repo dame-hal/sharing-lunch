@@ -6,13 +6,15 @@ jobs:
 
     working_directory: sharing-lunch # カレントディレクトリの指定
 
+    environmant:
+      - SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
+
     steps:
       - checkout
       - run:
           name: Notification to Slack "Build Started"
           command: |
-                curl -X POST \
-                $SLACK_WEBHOOK_URL \
+                curl -X POST $SLACK_WEBHOOK_URL \
                 -H 'content-type: application/json' \
                 -d '{
                   "text": "Build Started!"
