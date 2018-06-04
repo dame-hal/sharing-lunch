@@ -9,16 +9,16 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Notification to Slack "Build Started"
-        command: |
-          PAYLOAD=`cat << EOS
-          {
-            "channel": "#alert-circleci",
-            "text": "Build Started",
-          }
-          EOS
-          `
-          curl -X POST --data-urlencode "payload=$PAYLOAD" $SLACK_WEBHOOK_URL
+          name: Notification to Slack "Build Started"
+          command: |
+            PAYLOAD=`cat << EOS
+            {
+              "channel": "#alert-circleci",
+              "text": "Build Started",
+            }
+            EOS
+            `
+            curl -X POST --data-urlencode "payload=$PAYLOAD" $SLACK_WEBHOOK_URL
 
       - run:
           name: Test echo
