@@ -13,4 +13,4 @@ docker-compose up -d
 echo ''
 echo '----------------'
 echo '下記URLから開発環境にアクセスしてください'
-echo 'URL: http://0.0.0.0:8081/'
+echo 'URL: http://0.0.0.0:8080/'
