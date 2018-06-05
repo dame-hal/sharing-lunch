@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - checkout
-      - run:
+      - run: # ビルド開始通知
           name: Notification to Slack "Build Started"
           command: |
                 curl -X POST $SLACK_WEBHOOK_URL \
