@@ -7,21 +7,17 @@
       <p>
         <h3><label for="visit-date">訪問日</label></h3>
         <input type="date" id="visit-date" v-model="lunch.visitDate">
-      </p>
       <p>
         <h3><label for="store-name">店名</label></h3>
         <input type="text" id="store-name" placeholder="店名を入力してください" size="50" v-model="lunch.storeName">
-      </p>
       <p>
         <h3><label for="url">URL</label></h3>
         <input type="text" id="url" placeholder="お店のホームページや紹介サイトのURLを入力してください" size="100" v-model="lunch.url">
-      </p>
       <p>
         <h3>評価</h3>
-        <div v-for="star in stars">
+        <div v-for="(star, index) in stars" v-bind:key="index">
           <input type="radio" v-bind:id="star.value" name="stars" v-bind:value="star.value" v-model="lunch.starValue"><label v-bind:for="star.value">{{ star.label }}</label>
         </div>
-      </p>
       <p>
         <button type="submit">ランチを共有する</button>
       </p>
@@ -31,7 +27,7 @@
 
 <script>
   export default {
-    name: "Sharing",
+    name: 'Sharing',
     data: function () {
      return {
        stars: [
@@ -77,14 +73,14 @@
        * @returns {string}
        */
       today: function () {
-        var date = new Date();
+        var date = new Date()
         var twoDigits = function (num, digit) {
-          num += '';
+          num += ''
           if (num.length < digit) {
-            return '0' + num;
+            return '0' + num
           }
-        };
-        return date.getFullYear() + "-" + twoDigits((date.getMonth() + 1), 2) + "-" + twoDigits(date.getDate(), 2)
+        }
+        return date.getFullYear() + '-' + twoDigits((date.getMonth() + 1), 2) + '-' + twoDigits(date.getDate(), 2)
       },
       /**
        * ランチ情報オブジェクトを初期化
@@ -110,11 +106,8 @@
        * @author hebara
        */
       addLunch: function () {
-        this.lunches.push(this.lunch);
+        this.lunches.push(this.lunch)
         this.lunch = this.initLunch(this.today(), null, null, null)
-      },
-      validateLunch: function (e) {
-        
       }
     }
   }
