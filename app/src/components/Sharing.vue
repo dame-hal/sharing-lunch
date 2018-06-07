@@ -3,7 +3,7 @@
     <h2>
       今日のランチは？
     </h2>
-    <form action="">
+    <form v-on:submit.prevent="addLunch">
       <p>
         <h3><label for="visit-date">訪問日</label></h3>
         <input type="date" id="visit-date" v-model="lunch.visitDate">
@@ -23,7 +23,7 @@
         </div>
       </p>
       <p>
-        <button v-on:click="addLunch()">ランチを共有する</button>
+        <button type="submit">ランチを共有する</button>
       </p>
     </form>
   </div>
@@ -91,7 +91,7 @@
           visitDate: date,
           storeName: name,
           url: url,
-          starValue: star
+          starValue: ''
         }
       },
       addLunch: function () {
