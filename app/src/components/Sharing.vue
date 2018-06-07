@@ -23,7 +23,7 @@
         </div>
       </p>
       <p>
-        <button v-on:click="">ランチを共有する</button>
+        <button v-on:click="addLunch()">ランチを共有する</button>
       </p>
     </form>
   </div>
@@ -36,11 +36,11 @@
      return {
        stars: [
          {
-           value: 'excellent',
+           value: 'poor',
            label: 'もう行かない'
          },
          {
-           value: 'good',
+           value: 'fair',
            label: '好みじゃなかった'
          },
          {
@@ -48,21 +48,23 @@
            label: '美味しかった'
          },
          {
-           value: 'fair',
-           label: '好物があった'
+           value: 'good',
+           label: 'ローテーション入り'
          },
          {
-           value: 'poor',
-           label: 'ローテーション入り'
+           value: 'excellent',
+           label: 'メンバーにも食べてほしい'
          }
        ],
-       lunches: [],
-       lunch: {
-         visitDate: this.today(),
-         storeName: '',
-         url: '',
-         starValue: ''
-       }
+       lunches: [
+         {
+           visitDate: this.today(),
+           storeName: '王将',
+           url: 'https://www.ohsho.co.jp/',
+           starValue: 'good'
+         }
+       ],
+       lunch: this.initLunch(this.today(), '', '', '')
      }
     },
     methods: {
@@ -83,6 +85,18 @@
           }
         };
         return date.getFullYear() + "-" + twoDigits((date.getMonth() + 1), 2) + "-" + twoDigits(date.getDate(), 2)
+      },
+      initLunch: function (date, name, url, star) {
+        return {
+          visitDate: date,
+          storeName: name,
+          url: url,
+          starValue: star
+        }
+      },
+      addLunch: function () {
+        this.lunches.push(this.lunch);
+        this.lunch = this.initLunch(this.today(), '', '', '')
       }
     }
   }
