@@ -64,7 +64,7 @@
            starValue: 'good'
          }
        ],
-       lunch: this.initLunch(this.today(), '', '', '')
+       lunch: this.initLunch(this.today(), null, null, null)
      }
     },
     methods: {
@@ -86,17 +86,35 @@
         };
         return date.getFullYear() + "-" + twoDigits((date.getMonth() + 1), 2) + "-" + twoDigits(date.getDate(), 2)
       },
+      /**
+       * ランチ情報オブジェクトを初期化
+       *
+       * @author hebara
+       * @param date 訪問日
+       * @param name 店名
+       * @param url URL
+       * @param star 評価
+       * @returns {lunch}
+       */
       initLunch: function (date, name, url, star) {
         return {
           visitDate: date,
           storeName: name,
           url: url,
-          starValue: ''
+          starValue: star
         }
       },
+      /**
+       * ランチ情報の追加処理
+       *
+       * @author hebara
+       */
       addLunch: function () {
         this.lunches.push(this.lunch);
-        this.lunch = this.initLunch(this.today(), '', '', '')
+        this.lunch = this.initLunch(this.today(), null, null, null)
+      },
+      validateLunch: function (e) {
+        
       }
     }
   }
