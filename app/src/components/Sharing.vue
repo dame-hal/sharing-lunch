@@ -6,23 +6,25 @@
     <form action="">
       <p>
         <h3><label for="visit-date">訪問日</label></h3>
-        <input type="date" id="visit-date" v-bind:value="today()">
+        <input type="date" id="visit-date" v-model="lunch.visitDate">
       </p>
       <p>
         <h3><label for="store-name">店名</label></h3>
-        <input type="text" id="store-name" placeholder="店名を入力してください" size="50">
+        <input type="text" id="store-name" placeholder="店名を入力してください" size="50" v-model="lunch.storeName">
       </p>
       <p>
         <h3><label for="url">URL</label></h3>
-        <input type="text" id="url" placeholder="お店のホームページや紹介サイトのURLを入力してください" size="100">
+        <input type="text" id="url" placeholder="お店のホームページや紹介サイトのURLを入力してください" size="100" v-model="lunch.url">
       </p>
       <p>
         <h3>評価</h3>
         <div v-for="star in stars">
-          <input type="radio" v-bind:id="star.value" name="stars" v-bind:value="star.value"><label v-bind:for="star.value">{{ star.label }}</label>
+          <input type="radio" v-bind:id="star.value" name="stars" v-bind:value="star.value" v-model="lunch.starValue"><label v-bind:for="star.value">{{ star.label }}</label>
         </div>
       </p>
-      <input type="submit" value="メンバーに共有する">
+      <p>
+        <button v-on:click="">ランチを共有する</button>
+      </p>
     </form>
   </div>
 </template>
@@ -34,26 +36,33 @@
      return {
        stars: [
          {
-           value: 'star-1',
+           value: 'excellent',
            label: 'もう行かない'
          },
          {
-           value: 'star-2',
+           value: 'good',
            label: '好みじゃなかった'
          },
          {
-           value: 'star-3',
+           value: 'average',
            label: '美味しかった'
          },
          {
-           value: 'star-4',
+           value: 'fair',
            label: '好物があった'
          },
          {
-           value: 'star-5',
+           value: 'poor',
            label: 'ローテーション入り'
          }
-       ]
+       ],
+       lunches: [],
+       lunch: {
+         visitDate: this.today(),
+         storeName: '',
+         url: '',
+         starValue: ''
+       }
      }
     },
     methods: {
