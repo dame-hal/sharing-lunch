@@ -4,28 +4,59 @@
       今日のランチは？
     </h2>
     <form v-on:submit.prevent="addLunch">
-      <p>
-        <h3><label for="visit-date">訪問日</label></h3>
-        <input type="date" id="visit-date" v-model="lunch.visitDate">
-      <p>
-        <h3><label for="store-name">店名</label></h3>
-        <input type="text" id="store-name" placeholder="店名を入力してください" size="50" v-model="lunch.storeName">
-      <p>
-        <h3><label for="url">URL</label></h3>
-        <input type="text" id="url" placeholder="お店のホームページや紹介サイトのURLを入力してください" size="100" v-model="lunch.url">
-      <p>
-        <h3>評価</h3>
-        <div v-for="(star, index) in stars" v-bind:key="index">
-          <input type="radio" v-bind:id="star.value" name="stars" v-bind:value="star.value" v-model="lunch.starValue"><label v-bind:for="star.value">{{ star.label }}</label>
+      <div>
+        <h3><label for="visit-date">訪問日*</label></h3>
+        <p><input type="date" id="visit-date" v-model="lunch.visitDate" v-validate="'required'" name="visitName" data-vv-as="訪問日"></p>
+        <div v-show="errors.has('visitName')">
+          <p>{{ errors.first('visitName') }}</p>
         </div>
-      <p>
+      </div>
+      <div>
+        <h3><label for="store-name">店名*</label></h3>
+        <input type="text" id="store-name" placeholder="店名を入力してください" size="50" v-model="lunch.storeName" v-validate="'required'" name="storeName" data-vv-as="店名">
+        <div v-show="errors.has('storeName')">
+          <p>{{ errors.first('storeName') }}</p>
+        </div>
+      </div>
+      <div>
+        <h3><label for="url">紹介URL</label></h3>
+        <input type="text" id="url" placeholder="お店のホームページや紹介サイトのURLを入力してください" size="100" v-model="lunch.url" v-validate="'url'" data-vv-as="紹介URL" name="url">
+        <div v-show="errors.has('url')">
+          <p>{{ errors.first('url') }}</p>
+        </div>
+      </div>
+      <div>
+        <h3><label>評価*</label></h3>
+        <div v-for="(star, index) in stars" v-bind:key="index">
+          <label v-bind:for="star.value">
+            <input type="radio" v-bind:id="star.value" name="star.value" v-bind:value="star.value" v-model="lunch.starValue" v-validate="'required'" data-vv-as="評価">{{ star.label }}
+          </label>
+        </div>
+        <div v-show="errors.has('star.value')">
+          <p>{{ errors.first('star.value') }}</p>
+        </div>
+      </div>
+      <div>
         <button type="submit">ランチを共有する</button>
-      </p>
+        <p v-show="lunches.length > 1">{{ messageAddLunch }}</p>
+      </div>
     </form>
   </div>
 </template>
 
 <script>
+/**
+ * vee-validate読み込み
+ */
+  import Vue from 'vue'
+  import VeeValidate from 'vee-validate'
+  Vue.use(VeeValidate)
+
+  // vee-validateの日本語
+  import ja from 'vee-validate/dist/locale/ja'
+  VeeValidate.Validator.localize('ja', ja)
+  Vue.use(VeeValidate, { locale: 'ja' })
+
   export default {
     name: 'Sharing',
     data: function () {
@@ -60,7 +91,8 @@
            starValue: 'good'
          }
        ],
-       lunch: this.initLunch(this.today(), null, null, null)
+       lunch: this.initLunch(this.today(), null, null, null),
+       messageAddLunch: 'チームメンバーにランチを共有しました'
      }
     },
     methods: {
@@ -106,8 +138,15 @@
        * @author hebara
        */
       addLunch: function () {
-        this.lunches.push(this.lunch)
-        this.lunch = this.initLunch(this.today(), null, null, null)
+        this.$validator.validateAll()
+          .then((result) => {
+            if (result) {
+              this.lunches.push(this.lunch)
+              this.lunch = this.initLunch(this.today(), null, null, this.lunch.starValue)
+              this.$validator.reset()
+            }
+        })
+
       }
     }
   }
