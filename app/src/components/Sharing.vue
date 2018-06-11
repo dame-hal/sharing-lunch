@@ -45,15 +45,15 @@
 </template>
 
 <script>
-/**
- * vee-validate読み込み
- */
+
+  // vee-validate読み込み
   import Vue from 'vue'
   import VeeValidate from 'vee-validate'
+  import ja from 'vee-validate/dist/locale/ja'
+
   Vue.use(VeeValidate)
 
   // vee-validateの日本語
-  import ja from 'vee-validate/dist/locale/ja'
   VeeValidate.Validator.localize('ja', ja)
   Vue.use(VeeValidate, { locale: 'ja' })
 
@@ -146,7 +146,6 @@
               this.$validator.reset()
             }
         })
-
       }
     }
   }
