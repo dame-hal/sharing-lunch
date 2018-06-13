@@ -1,105 +1,134 @@
 <template>
   <section id="sharing-form" class="section">
-    <div class="container">
-      <h2 class="subtitle">
-         ランチをシェアしませんか？
-      </h2>
-      <form v-on:submit.prevent="addLunch">
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label for="visit-date" class="label">訪問日&nbsp;<span class="has-text-danger">*</span></label>
-          </div>
-          <div class="field-body">
-            <div class="field is-narrow">
-              <p v-bind:class="{ 'control':true, 'is-expanded':true, 'has-icons-left':true, 'has-icons-right':errors.has('visitDate') }">
-                <input v-bind:class="{ input:true, 'is-danger':errors.has('visitDate') }" type="date" id="visit-date" v-model="lunch.visitDate" v-validate="'required'" name="visitDate" data-vv-as="訪問日">
-                <span class="icon is-small is-left">
+    <div class="columns">
+      <div class="column is-half">
+        <h3 class="subtitle">
+          ランチをシェアしませんか？
+        </h3>
+        <form v-on:submit.prevent="addLunch" id="add-lunch">
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label for="visit-date" class="label">訪問日&nbsp;<span class="has-text-danger">*</span></label>
+            </div>
+            <div class="field-body">
+              <div class="field is-narrow">
+                <p v-bind:class="{ 'control':true, 'is-expanded':true, 'has-icons-left':true, 'has-icons-right':errors.has('visitDate') }">
+                  <input v-bind:class="{ input:true, 'form-lunch-input':true,'is-danger':errors.has('visitDate') }" type="date" id="visit-date" v-model="lunch.visitDate" v-validate="'required'" name="visitDate" data-vv-as="訪問日">
+                  <span class="icon is-small is-left">
                   <i class="far fa-calendar-alt"></i>
                 </span>
-                <span class="icon is-small is-right" v-show="errors.has('visitDate')">
+                  <span class="icon is-small is-right" v-show="errors.has('visitDate')">
                   <i class="fas fa-exclamation-triangle"></i>
                 </span>
-              </p>
-              <p class="help is-danger" v-show="errors.has('visitDate')">
-                {{ errors.first('visitDate') }}
-              </p>
+                </p>
+                <p class="help is-danger" v-show="errors.has('visitDate')">
+                  {{ errors.first('visitDate') }}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label" for="store-name">店名&nbsp;<span class="has-text-danger">*</span></label>
-          </div>
-          <div class="field-body">
-            <div class="field is-narrow">
-              <p v-bind:class="{ 'control':true, 'is-expanded':true, 'has-icons-left':true, 'has-icons-right':errors.has('storeName') }">
-                <input v-bind:class="{ input:true, 'is-danger':errors.has('storeName') }" type="text" id="store-name" placeholder="店名を入力してください" v-model="lunch.storeName" v-validate="'required'" name="storeName" data-vv-as="店名">
-                <span class="icon is-small is-left">
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label" for="store-name">店名&nbsp;<span class="has-text-danger">*</span></label>
+            </div>
+            <div class="field-body">
+              <div class="field is-narrow">
+                <p v-bind:class="{ 'control':true, 'is-expanded':true, 'has-icons-left':true, 'has-icons-right':errors.has('storeName') }">
+                  <input v-bind:class="{ input:true, 'form-lunch-input':true, 'is-danger':errors.has('storeName') }" type="text" id="store-name" placeholder="店名" v-model="lunch.storeName" v-validate="'required'" name="storeName" data-vv-as="店名">
+                  <span class="icon is-small is-left">
                   <i class="fas fa-store-alt"></i>
                 </span>
-                <span class="icon is-small is-right" v-show="errors.has('storeName')">
+                  <span class="icon is-small is-right" v-show="errors.has('storeName')">
                   <i class="fas fa-exclamation-triangle"></i>
                 </span>
-              </p>
-              <p class="help is-danger" v-show="errors.has('storeName')">
-                {{ errors.first('storeName') }}
-              </p>
+                </p>
+                <p class="help is-danger" v-show="errors.has('storeName')">
+                  {{ errors.first('storeName') }}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label" for="url">紹介URL</label>
-          </div>
-          <div class="field-body">
-            <div class="field is-narrow">
-              <p v-bind:class="{ 'control':true, 'is-expanded':true, 'has-icons-left':true, 'has-icons-right':errors.has('url') }">
-                <input v-bind:class="{ input:true, 'is-danger':errors.has('url') }" type="text" id="url" placeholder="お店のホームページや紹介サイトのURLを入力してください" v-model="lunch.url" v-validate="'url'" data-vv-as="紹介URL" name="url">
-                <span class="icon is-small is-left">
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label" for="url">URL</label>
+            </div>
+            <div class="field-body">
+              <div class="field is-narrow">
+                <p v-bind:class="{ 'control':true, 'is-expanded':true, 'has-icons-left':true, 'has-icons-right':errors.has('url') }">
+                  <input v-bind:class="{ input:true, 'form-lunch-input':true, 'is-danger':errors.has('url') }" type="text" id="url" placeholder="お店のホームページURL" v-model="lunch.url" v-validate="'url'" data-vv-as="紹介URL" name="url">
+                  <span class="icon is-small is-left">
                   <i class="fas fa-link"></i>
                 </span>
-                <span class="icon is-small is-right" v-show="errors.has('url')">
+                  <span class="icon is-small is-right" v-show="errors.has('url')">
                   <i class="fas fa-exclamation-triangle"></i>
                 </span>
-              </p>
-              <p class="help is-danger" v-show="errors.has('url')">
-                {{ errors.first('url') }}
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">評価&nbsp;<span class="has-text-danger">*</span></label>
-          </div>
-          <div class="field-body">
-            <div class="field is-narrow">
-              <div v-for="(star, index) in stars" v-bind:key="index">
-                <label class="radio">
-                  <input type="radio" v-bind:id="star.value" name="star.value" v-bind:value="star.value" v-model="lunch.starValue" v-validate="'required'" data-vv-as="評価">&nbsp;&nbsp;{{ star.label }}
-                </label>
+                </p>
+                <p class="help is-danger" v-show="errors.has('url')">
+                  {{ errors.first('url') }}
+                </p>
               </div>
             </div>
           </div>
-        </div>
-
-        <div class="field is-horizontal">
-          <div class="field-label">
-            <!-- Left empty for spacing -->
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <button class="button is-primary" type="submit">
-                  ランチを共有する
-                </button>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">感想&nbsp;<span class="has-text-danger">*</span></label>
+            </div>
+            <div class="field-body">
+              <div class="field is-narrow">
+                <div v-for="(star, index) in stars" v-bind:key="index">
+                  <label class="radio">
+                    <input type="radio" v-bind:id="star.value" name="star.value" v-bind:value="star.value" v-model="lunch.starValue" v-validate="'required'" data-vv-as="感想">&nbsp;&nbsp;{{ star.label }}
+                  </label>
+                </div>
+                <p class="help is-danger" v-show="errors.has('star.value')">
+                  {{ errors.first('star.value') }}
+                </p>
               </div>
             </div>
           </div>
-        </div>
 
-        <p v-show="lunches.length > 1">{{ messageAddLunch }}</p>
-      </form>
+          <div class="field is-horizontal">
+            <div class="field-label">
+              <!-- Left empty for spacing -->
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <div class="control">
+                  <button class="button is-primary" type="submit">
+                    ランチを共有する
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="column is-half">
+        <h3 class="subtitle">
+          みんなのランチ
+        </h3>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>店名</th>
+            <th>評価</th>
+            <th>訪問日</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr v-for="(lunch, index) in lunches" v-bind:key="index">
+            <td>{{ index + 1 }}</td>
+            <td v-if="lunch.url !== ''"><a href="lunch.url">{{ lunch.storeName }}</a></td>
+            <td v-else>{{ lunch.storeName }}</td>
+            <td>{{ searchStarLabel(lunch.starValue) }}</td>
+            <td>{{ lunch.visitDate }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </section>
 </template>
@@ -135,11 +164,11 @@ export default {
         },
         {
           value: 'good',
-          label: 'ローテーション入り'
+          label: '好みだった'
         },
         {
           value: 'excellent',
-          label: 'メンバーにも食べてほしい'
+          label: 'ぜひ食べてほしい'
         }
       ],
       lunches: [
@@ -148,10 +177,35 @@ export default {
           storeName: '王将',
           url: 'https://www.ohsho.co.jp/',
           starValue: 'good'
+        },
+        {
+          visitDate: this.today(),
+          storeName: '茅ヶ崎　海ぶね',
+          url: 'https://www.shinjukuparktower.com/shops/shopdata/kabune.html',
+          starValue: 'average'
+        },
+        {
+          visitDate: this.today(),
+          storeName: '博多ぶあいそ別邸',
+          url: 'https://www.shinjukuparktower.com/shops/saboten-bar.html',
+          starValue: 'excellent'
+        },
+        {
+          visitDate: this.today(),
+          storeName: 'とんかつ新宿さぼてん',
+          url: 'https://www.shinjukuparktower.com/shops/shopdata/buaiso.html',
+          starValue: 'fair'
+        },
+        {
+          visitDate: this.today(),
+          storeName: 'Excelsior Cafe',
+          url: '',
+          starValue: 'average'
         }
       ],
       lunch: this.initLunch(this.today(), null, null, null),
-      messageAddLunch: 'チームメンバーにランチを共有しました'
+      messageAddLunch: 'あなたのランチをシェアしてくれてありがとう！！',
+      isNotified: false
     }
   },
   methods: {
@@ -205,13 +259,30 @@ export default {
             this.lunches.push(this.lunch)
             this.lunch = this.initLunch(this.today(), null, null, this.lunch.starValue)
             this.$validator.reset()
+
+            this.isNotified = true
           }
         })
+    },
+    /**
+     * valueからlabelを検索して返す
+     * @param value
+     */
+    searchStarLabel: function (starValue) {
+      var label = ''
+      this.stars.forEach(function (value) {
+        if (value.value === starValue) {
+          label = value.label
+        }
+      })
+      return label
     }
   }
 }
 </script>
 
 <style scoped>
-
+.form-lunch-input {
+  width: 360px;
+}
 </style>
