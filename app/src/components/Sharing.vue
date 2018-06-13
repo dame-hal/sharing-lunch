@@ -1,5 +1,8 @@
 <template>
   <section id="sharing-form" class="section">
+    <p class="notification is-info" v-show="isNotified === true">
+      {{ messageAddLunch }}
+    </p>
     <div class="columns">
       <div class="column is-half">
         <h3 class="subtitle">
