@@ -33,7 +33,7 @@
           <div class="field-body">
             <div class="field is-narrow">
               <p v-bind:class="{ 'control':true, 'is-expanded':true, 'has-icons-left':true, 'has-icons-right':errors.has('storeName') }">
-                <input v-bind:class="{ input:true, 'is-danger':errors.has('storeName') }" type="text" id="store-name" placeholder="店名を入力してください" size="50" v-model="lunch.storeName" v-validate="'required'" name="storeName" data-vv-as="店名">
+                <input v-bind:class="{ input:true, 'is-danger':errors.has('storeName') }" type="text" id="store-name" placeholder="店名を入力してください" v-model="lunch.storeName" v-validate="'required'" name="storeName" data-vv-as="店名">
                 <span class="icon is-small is-left">
                   <i class="fas fa-store-alt"></i>
                 </span>
@@ -54,7 +54,7 @@
           <div class="field-body">
             <div class="field is-narrow">
               <p v-bind:class="{ 'control':true, 'is-expanded':true, 'has-icons-left':true, 'has-icons-right':errors.has('url') }">
-                <input v-bind:class="{ input:true, 'is-danger':errors.has('url') }" type="text" id="url" placeholder="お店のホームページや紹介サイトのURLを入力してください" size="100" v-model="lunch.url" v-validate="'url'" data-vv-as="紹介URL" name="url">
+                <input v-bind:class="{ input:true, 'is-danger':errors.has('url') }" type="text" id="url" placeholder="お店のホームページや紹介サイトのURLを入力してください" v-model="lunch.url" v-validate="'url'" data-vv-as="紹介URL" name="url">
                 <span class="icon is-small is-left">
                   <i class="fas fa-link"></i>
                 </span>
@@ -105,112 +105,111 @@
 </template>
 
 <script>
+// vee-validate読み込み
+import Vue from 'vue'
+import VeeValidate from 'vee-validate'
+import ja from 'vee-validate/dist/locale/ja'
 
-  // vee-validate読み込み
-  import Vue from 'vue'
-  import VeeValidate from 'vee-validate'
-  import ja from 'vee-validate/dist/locale/ja'
+Vue.use(VeeValidate)
 
-  Vue.use(VeeValidate)
+// vee-validateの日本語
+VeeValidate.Validator.localize('ja', ja)
+Vue.use(VeeValidate, { locale: 'ja' })
 
-  // vee-validateの日本語
-  VeeValidate.Validator.localize('ja', ja)
-  Vue.use(VeeValidate, { locale: 'ja' })
-
-  export default {
-    name: 'Sharing',
-    data: function () {
-     return {
-       stars: [
-         {
-           value: 'poor',
-           label: 'もう行かない'
-         },
-         {
-           value: 'fair',
-           label: '好みじゃなかった'
-         },
-         {
-           value: 'average',
-           label: '美味しかった'
-         },
-         {
-           value: 'good',
-           label: 'ローテーション入り'
-         },
-         {
-           value: 'excellent',
-           label: 'メンバーにも食べてほしい'
-         }
-       ],
-       lunches: [
-         {
-           visitDate: this.today(),
-           storeName: '王将',
-           url: 'https://www.ohsho.co.jp/',
-           starValue: 'good'
-         }
-       ],
-       lunch: this.initLunch(this.today(), null, null, null),
-       messageAddLunch: 'チームメンバーにランチを共有しました'
-     }
-    },
-    methods: {
-      /**
-       * 本日の日付を訪問日フォームの初期値に挿入できるフォーマットで返す
-       *
-       * @author hebara
-       * @param num
-       * @param digit 桁数
-       * @returns {string}
-       */
-      today: function () {
-        var date = new Date()
-        var twoDigits = function (num, digit) {
-          num += ''
-          if (num.length < digit) {
-            return '0' + num
-          } else {
-            return num
-          }
+export default {
+  name: 'Sharing',
+  data: function () {
+    return {
+      stars: [
+        {
+          value: 'poor',
+          label: 'もう行かない'
+        },
+        {
+          value: 'fair',
+          label: '好みじゃなかった'
+        },
+        {
+          value: 'average',
+          label: '美味しかった'
+        },
+        {
+          value: 'good',
+          label: 'ローテーション入り'
+        },
+        {
+          value: 'excellent',
+          label: 'メンバーにも食べてほしい'
         }
-        return date.getFullYear() + '-' + twoDigits((date.getMonth() + 1), 2) + '-' + twoDigits(date.getDate(), 2)
-      },
-      /**
-       * ランチ情報オブジェクトを初期化
-       *
-       * @author hebara
-       * @param date 訪問日
-       * @param name 店名
-       * @param url URL
-       * @param star 評価
-       * @returns {lunch}
-       */
-      initLunch: function (date, name, url, star) {
-        return {
-          visitDate: date,
-          storeName: name,
-          url: url,
-          starValue: star
+      ],
+      lunches: [
+        {
+          visitDate: this.today(),
+          storeName: '王将',
+          url: 'https://www.ohsho.co.jp/',
+          starValue: 'good'
         }
-      },
-      /**
-       * ランチ情報の追加処理
-       *
-       * @author hebara
-       */
-      addLunch: function () {
-        this.$validator.validateAll()
-          .then((result) => {
-            if (result) {
-              this.lunches.push(this.lunch)
-              this.lunch = this.initLunch(this.today(), null, null, this.lunch.starValue)
-              this.$validator.reset()
-            }
-        })
+      ],
+      lunch: this.initLunch(this.today(), null, null, null),
+      messageAddLunch: 'チームメンバーにランチを共有しました'
+    }
+  },
+  methods: {
+    /**
+     * 本日の日付を訪問日フォームの初期値に挿入できるフォーマットで返す
+     *
+     * @author hebara
+     * @param num
+     * @param digit 桁数
+     * @returns {string}
+     */
+    today: function () {
+      var date = new Date()
+      var twoDigits = function (num, digit) {
+        num += ''
+        if (num.length < digit) {
+          return '0' + num
+        } else {
+          return num
+        }
       }
+      return date.getFullYear() + '-' + twoDigits((date.getMonth() + 1), 2) + '-' + twoDigits(date.getDate(), 2)
+    },
+    /**
+     * ランチ情報オブジェクトを初期化
+     *
+     * @author hebara
+     * @param date 訪問日
+     * @param name 店名
+     * @param url URL
+     * @param star 評価
+     * @returns {lunch}
+     */
+    initLunch: function (date, name, url, star) {
+      return {
+        visitDate: date,
+        storeName: name,
+        url: url,
+        starValue: star
+      }
+    },
+    /**
+     * ランチ情報の追加処理
+     *
+     * @author hebara
+     */
+    addLunch: function () {
+      this.$validator.validateAll()
+        .then((result) => {
+          if (result) {
+            this.lunches.push(this.lunch)
+            this.lunch = this.initLunch(this.today(), null, null, this.lunch.starValue)
+            this.$validator.reset()
+          }
+        })
     }
   }
+}
 </script>
 
 <style scoped>
