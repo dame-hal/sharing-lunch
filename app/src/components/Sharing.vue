@@ -9,6 +9,7 @@
           ランチをシェアしませんか？
         </h3>
         <form v-on:submit.prevent="addLunch" id="add-lunch">
+          <!-- Form: visit-date -->
           <div class="field is-horizontal">
             <div class="field-label is-normal">
               <label for="visit-date" class="label">訪問日&nbsp;<span class="has-text-danger">*</span></label>
@@ -30,6 +31,7 @@
               </div>
             </div>
           </div>
+          <!-- Form: store-name -->
           <div class="field is-horizontal">
             <div class="field-label is-normal">
               <label class="label" for="store-name">店名&nbsp;<span class="has-text-danger">*</span></label>
@@ -51,6 +53,7 @@
               </div>
             </div>
           </div>
+          <!-- Form: url -->
           <div class="field is-horizontal">
             <div class="field-label is-normal">
               <label class="label" for="url">URL</label>
@@ -72,17 +75,14 @@
               </div>
             </div>
           </div>
+          <!-- Form: rating -->
           <div class="field is-horizontal">
             <div class="field-label is-normal">
-              <label class="label">感想&nbsp;<span class="has-text-danger">*</span></label>
+              <label class="label">評価&nbsp;<span class="has-text-danger">*</span></label>
             </div>
             <div class="field-body">
               <div class="field is-narrow">
-                <div v-for="(star, index) in stars" v-bind:key="index">
-                  <label class="radio">
-                    <input type="radio" v-bind:id="star.value" name="star.value" v-bind:value="star.value" v-model="lunch.starValue" v-validate="'required'" data-vv-as="感想">&nbsp;&nbsp;{{ star.label }}
-                  </label>
-                </div>
+                <star-rating v-model="lunch.rating" v-bind:star-size="25" v-bind:rounded-corners="true" v-bind:show-rating="false"></star-rating>
                 <p class="help is-danger" v-show="errors.has('star.value')">
                   {{ errors.first('star.value') }}
                 </p>
@@ -126,7 +126,7 @@
             <td>{{ index + 1 }}</td>
             <td v-if="lunch.url !== ''"><a href="lunch.url">{{ lunch.storeName }}</a></td>
             <td v-else>{{ lunch.storeName }}</td>
-            <td>{{ searchStarLabel(lunch.starValue) }}</td>
+            <td><star-rating v-model="lunch.rating" v-bind:star-size="25" v-bind:rounded-corners="true" v-bind:show-rating="false" v-bind:read-only="true"></star-rating></td>
             <td>{{ lunch.visitDate }}</td>
           </tr>
           </tbody>
@@ -141,115 +141,88 @@
 import Vue from 'vue'
 import VeeValidate from 'vee-validate'
 import ja from 'vee-validate/dist/locale/ja'
+import StarRating from 'vue-star-rating'
 
 Vue.use(VeeValidate)
+
+Vue.component('star-rating', StarRating)
 
 // vee-validateの日本語
 VeeValidate.Validator.localize('ja', ja)
 Vue.use(VeeValidate, { locale: 'ja' })
 
+class Lunch {
+  constructor () {
+    this.visitDate = this.today()
+    this.storeName = ''
+    this.url = ''
+    this.rating = 0
+  }
+
+  /**
+   * 本日の日付を訪問日フォームの初期値に挿入できるフォーマットで返す
+   *
+   * @author hebara
+   * @param num
+   * @param digit 桁数
+   * @returns {string}
+   */
+  today () {
+    var date = new Date()
+    var twoDigits = function (num, digit) {
+      num += ''
+      if (num.length < digit) {
+        return '0' + num
+      } else {
+        return num
+      }
+    }
+    return date.getFullYear() + '-' + twoDigits((date.getMonth() + 1), 2) + '-' + twoDigits(date.getDate(), 2)
+  }
+}
+
 export default {
   name: 'Sharing',
   data: function () {
     return {
-      stars: [
-        {
-          value: 'poor',
-          label: 'もう行かない'
-        },
-        {
-          value: 'fair',
-          label: '好みじゃなかった'
-        },
-        {
-          value: 'average',
-          label: '美味しかった'
-        },
-        {
-          value: 'good',
-          label: '好みだった'
-        },
-        {
-          value: 'excellent',
-          label: 'ぜひ食べてほしい'
-        }
-      ],
       lunches: [
         {
-          visitDate: this.today(),
+          visitDate: '2018/06/12',
           storeName: '王将',
           url: 'https://www.ohsho.co.jp/',
-          starValue: 'good'
+          rating: 4
         },
         {
-          visitDate: this.today(),
+          visitDate: '2018/06/10',
           storeName: '茅ヶ崎　海ぶね',
           url: 'https://www.shinjukuparktower.com/shops/shopdata/kabune.html',
-          starValue: 'average'
+          rating: 4
         },
         {
-          visitDate: this.today(),
+          visitDate: '2018/05/23',
           storeName: '博多ぶあいそ別邸',
           url: 'https://www.shinjukuparktower.com/shops/saboten-bar.html',
-          starValue: 'excellent'
+          rating: 5
         },
         {
-          visitDate: this.today(),
+          visitDate: '2018/05/07',
           storeName: 'とんかつ新宿さぼてん',
           url: 'https://www.shinjukuparktower.com/shops/shopdata/buaiso.html',
-          starValue: 'fair'
+          rating: 2
         },
         {
-          visitDate: this.today(),
+          visitDate: '2018/05/30',
           storeName: 'Excelsior Cafe',
           url: '',
-          starValue: 'average'
+          rating: 3
         }
       ],
-      lunch: this.initLunch(this.today(), null, null, null),
+      lunch: new Lunch(),
       messageAddLunch: 'あなたのランチをシェアしてくれてありがとう！！',
       isNotified: false
     }
   },
   methods: {
-    /**
-     * 本日の日付を訪問日フォームの初期値に挿入できるフォーマットで返す
-     *
-     * @author hebara
-     * @param num
-     * @param digit 桁数
-     * @returns {string}
-     */
-    today: function () {
-      var date = new Date()
-      var twoDigits = function (num, digit) {
-        num += ''
-        if (num.length < digit) {
-          return '0' + num
-        } else {
-          return num
-        }
-      }
-      return date.getFullYear() + '-' + twoDigits((date.getMonth() + 1), 2) + '-' + twoDigits(date.getDate(), 2)
-    },
-    /**
-     * ランチ情報オブジェクトを初期化
-     *
-     * @author hebara
-     * @param date 訪問日
-     * @param name 店名
-     * @param url URL
-     * @param star 評価
-     * @returns {lunch}
-     */
-    initLunch: function (date, name, url, star) {
-      return {
-        visitDate: date,
-        storeName: name,
-        url: url,
-        starValue: star
-      }
-    },
     /**
      * ランチ情報の追加処理
      *
@@ -260,25 +233,12 @@ export default {
         .then((result) => {
           if (result) {
             this.lunches.push(this.lunch)
-            this.lunch = this.initLunch(this.today(), null, null, this.lunch.starValue)
+            this.lunch = new Lunch()
             this.$validator.reset()
 
             this.isNotified = true
           }
         })
-    },
-    /**
-     * valueからlabelを検索して返す
-     * @param value
-     */
-    searchStarLabel: function (starValue) {
-      var label = ''
-      this.stars.forEach(function (value) {
-        if (value.value === starValue) {
-          label = value.label
-        }
-      })
-      return label
     }
   }
 }
