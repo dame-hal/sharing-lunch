@@ -4,7 +4,7 @@
       {{ messageAddLunch }}
     </p>
     <div class="columns">
-      <div class="column is-half">
+      <div class="column is-one-third">
         <h3 class="subtitle">
           ランチをシェアしませんか？
         </h3>
@@ -107,7 +107,7 @@
         </form>
       </div>
 
-      <div class="column is-half">
+      <div class="column">
         <h3 class="subtitle">
           みんなのランチ
         </h3>
@@ -118,6 +118,7 @@
             <th>店名</th>
             <th>評価</th>
             <th>訪問日</th>
+            <th></th>
           </tr>
           </thead>
 
@@ -128,6 +129,7 @@
             <td v-else>{{ lunch.storeName }}</td>
             <td><star-rating v-model="lunch.rating" v-bind:star-size="25" v-bind:rounded-corners="true" v-bind:show-rating="false" v-bind:read-only="true"></star-rating></td>
             <td>{{ lunch.visitDate }}</td>
+            <td><a class="button" v-on:click="removeLunchAtIndex(index)"><span class="icon is-small"><i class="far fa-trash-alt"></i></span></a></td>
           </tr>
           </tbody>
         </table>
@@ -239,6 +241,10 @@ export default {
             this.isNotified = true
           }
         })
+    },
+    removeLunchAtIndex: function (index) {
+      console.log(index)
+      this.lunches.splice(index, 1)
     }
   }
 }
@@ -246,6 +252,6 @@ export default {
 
 <style scoped>
 .form-lunch-input {
-  width: 360px;
+  width: 240px;
 }
 </style>
