@@ -16,24 +16,6 @@ const _messageFormLunch = {
   }
 }
 
-const _messageFormLunch2 = [
-  {
-    'id': '1',
-    'status': 'is-info',
-    'message': 'あなたのランチをシェアしてくれてありがとう！！'
-  },
-  {
-    'id': '2',
-    'status': 'is-success',
-    'message': 'ランチ情報を削除しました'
-  },
-  {
-    'id': '3',
-    'status': 'is-success',
-    'message': 'ランチ情報を更新しました'
-  }
-]
-
 const _prefs = [
   { 'id': '1', 'name': '北海道' },
   { 'id': '2', 'name': '青森県' },
