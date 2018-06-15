@@ -1,7 +1,7 @@
 <template>
   <section id="sharing-form" class="section">
-    <p class="notification is-info" v-show="isNotified === true">
-      {{ messageAddLunch }}
+    <p v-bind:class="[notifiedMessage.default, notifiedMessage.status]" v-show="notifiedMessage.status !== ''">
+      {{ notifiedMessage.message }}
     </p>
     <div class="columns">
       <div class="column is-one-third">
@@ -144,14 +144,23 @@ import Vue from 'vue'
 import VeeValidate from 'vee-validate'
 import ja from 'vee-validate/dist/locale/ja'
 import StarRating from 'vue-star-rating'
+import Constants from '../constants/constant'
 
 Vue.use(VeeValidate)
+Vue.use(Constants)
 
 Vue.component('star-rating', StarRating)
 
 // vee-validateの日本語
 VeeValidate.Validator.localize('ja', ja)
 Vue.use(VeeValidate, { locale: 'ja' })
+
+const messages = Constants.data().messageFormLunch
+const formAction = {
+  'add': 'add',
+  'remove': 'remove',
+  'edit': 'edit'
+}
 
 class Lunch {
   constructor () {
@@ -220,8 +229,11 @@ export default {
         }
       ],
       lunch: new Lunch(),
-      messageAddLunch: 'あなたのランチをシェアしてくれてありがとう！！',
-      isNotified: false
+      notifiedMessage: {
+        default: 'notification',
+        status: '',
+        message: ''
+      }
     }
   },
   methods: {
@@ -238,13 +250,19 @@ export default {
             this.lunch = new Lunch()
             this.$validator.reset()
 
-            this.isNotified = true
+            this.pushMessage(formAction.add)
           }
         })
     },
     removeLunchAtIndex: function (index) {
-      console.log(index)
       this.lunches.splice(index, 1)
+
+      this.pushMessage(formAction.remove)
+    },
+    pushMessage: function (action) {
+      const message = messages[action]
+      this.notifiedMessage.status = message.status
+      this.notifiedMessage.message = message.message
     }
   }
 }
