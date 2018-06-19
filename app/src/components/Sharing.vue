@@ -155,16 +155,27 @@ Vue.component('star-rating', StarRating)
 VeeValidate.Validator.localize('ja', ja)
 Vue.use(VeeValidate, { locale: 'ja' })
 
+/**
+ * @const フォーム入力時のメッセージに関する定数。constants.jsのmessageFormLunchを参照
+ */
 const messages = Constants.data().messageFormLunch
+
+/**
+ * ランチ情報の操作
+ * @const {string}
+ */
 const formAction = {
   'add': 'add',
   'remove': 'remove',
   'edit': 'edit'
 }
 
+/**
+ * ランチ情報オブジェクト
+ */
 class Lunch {
   constructor () {
-    this.visitDate = this.today()
+    this.visitDate = Lunch.today()
     this.storeName = ''
     this.url = ''
     this.rating = 0
@@ -173,14 +184,11 @@ class Lunch {
   /**
    * 本日の日付を訪問日フォームの初期値に挿入できるフォーマットで返す
    *
-   * @author hebara
-   * @param num
-   * @param digit 桁数
-   * @returns {string}
+   * @returns {string} YYYY-MM-DD
    */
-  today () {
-    var date = new Date()
-    var twoDigits = function (num, digit) {
+  static today () {
+    let date = new Date()
+    let twoDigits = function (num, digit) {
       num += ''
       if (num.length < digit) {
         return '0' + num
@@ -192,6 +200,7 @@ class Lunch {
   }
 }
 
+/* @export */
 export default {
   name: 'Sharing',
   data: function () {
@@ -238,9 +247,7 @@ export default {
   },
   methods: {
     /**
-     * ランチ情報の追加処理
-     *
-     * @author hebara
+     * ランチ情報を追加する
      */
     addLunch: function () {
       this.$validator.validateAll()
@@ -254,11 +261,21 @@ export default {
           }
         })
     },
+    /**
+     * 登録済のランチ情報を削除する
+     *
+     * @param {number} index - ランチ情報配列のインデックス
+     */
     removeLunchAtIndex: function (index) {
       this.lunches.splice(index, 1)
 
       this.pushMessage(formAction.remove)
     },
+    /**
+     * メッセージを表示する
+     *
+     * @param {enum} action - enum: add, remove, edit
+     */
     pushMessage: function (action) {
       const message = messages[action]
       this.notifiedMessage.status = message.status
