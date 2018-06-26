@@ -1,0 +1,11 @@
+{
+  "source": "../src",
+  "destination": "../docs",
+  "includes": ["\\.js$"],
+  "excludes": ["\\main\\.js$","\\route\\.js$"],
+  "plugins": [
+    {
+      "name": "esdoc-standard-plugin"
+    }
+  ]
+}
