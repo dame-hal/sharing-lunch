@@ -11,7 +11,8 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "esdoc": "./node_modules/.bin/esdoc"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free-webfonts": "^1.0.9",
@@ -93,5 +94,16 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "esdoc": {
+    "source": "./src",
+    "destination": "./docs",
+    "includes": ["\\.js$"],
+    "excludes": ["\\main\\.js$","\\route\\.js$"],
+    "plugins": [
+      {
+        "name": "esdoc-standard-plugin"
+      }
+    ]
+  }
 }
