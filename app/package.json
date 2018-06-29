@@ -44,6 +44,7 @@
     "cross-spawn": "^5.0.1",
     "css-loader": "^0.28.0",
     "esdoc": "^1.1.0",
+    "esdoc-ecmascript-proposal-plugin": "^1.0.0",
     "esdoc-publish-html-plugin": "^1.1.2",
     "esdoc-standard-plugin": "^1.0.0",
     "eslint": "^4.15.0",
@@ -98,12 +99,16 @@
   "esdoc": {
     "source": "./src",
     "destination": "./docs",
-    "includes": ["\\.js$"],
-    "excludes": ["\\main\\.js$","\\route\\.js$"],
+    "includes": [
+      "\\.(js|vue)$"
+    ],
+    "excludes": [
+      "\\main\\.js$",
+      "\\route\\.js$"
+    ],
     "plugins": [
-      {
-        "name": "esdoc-standard-plugin"
-      }
+      {"name": "esdoc-standard-plugin"},
+      {"name": "esdoc-ecmascript-proposal-plugin", "option": {"all": true}}
     ]
   }
 }
