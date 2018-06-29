@@ -99,13 +99,7 @@
   "esdoc": {
     "source": "./src",
     "destination": "./docs",
-    "includes": [
-      "\\.(js|vue)$"
-    ],
-    "excludes": [
-      "\\main\\.js$",
-      "\\route\\.js$"
-    ],
+    "excludes": [ "(main|router/index)\\.js$" ],
     "plugins": [
       {"name": "esdoc-standard-plugin"},
       {"name": "esdoc-ecmascript-proposal-plugin", "option": {"all": true}}

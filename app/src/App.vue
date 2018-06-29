@@ -16,10 +16,8 @@
 </template>
 
 <script>
-import Sharing from './components/Sharing'
 export default {
-  name: 'App',
-  components: { Sharing }
+  name: 'App'
 }
 </script>
 
