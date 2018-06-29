@@ -28,3 +28,12 @@ npm test
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+## ESDoc出力手順
+1. 本プロジェクトをCloneしたディレクトリに移動してください。
+2. 下記コマンドでESDoc生成スクリプトが実行されます。
+```
+$ npm run esdoc
+```
+3. `docs`ディレクトリにESDocが出力されます。
+

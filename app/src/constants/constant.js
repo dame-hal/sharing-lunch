@@ -1,3 +1,8 @@
+/**
+ * ランチ情報操作定数
+ *
+ * @const {string} _messageFormLunch
+ */
 const _messageFormLunch = {
   'add': {
     'id': '1',
@@ -16,6 +21,11 @@ const _messageFormLunch = {
   }
 }
 
+/**
+ * 都道府県
+ *
+ * @const {String} add/remove/edit
+ */
 const _prefs = [
   { 'id': '1', 'name': '北海道' },
   { 'id': '2', 'name': '青森県' },
