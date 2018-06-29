@@ -1,7 +1,7 @@
 /**
  * ランチ情報操作定数
  *
- * @const {String} _messageFormLunch
+ * @const {string} _messageFormLunch
  */
 const _messageFormLunch = {
   'add': {

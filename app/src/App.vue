@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
-    <section class="section" id="app-header">
+  <div id="app" class="">
+    <section class="hero" id="app-header">
       <div class="container">
         <h1 class="title">
           あなたのランチ生活がチームメンバーの定番に
@@ -35,9 +35,6 @@ export default {
     background-image: url(https://uds.gnst.jp/rest/img/7jhs60me0000/s_00c2.jpg?t=1526519299);
     background-size: 100%;
     height: 400px;
-  }
-
-  #app-header {
     .container {
       margin-top: 250px;
     }

@@ -1,4 +1,9 @@
-// vee-validate読み込み
+/**
+ * SharingLunch main script file.
+ *
+ * @description 本ファイルは、SharingLunchコンポーネントのスクリプトファイルです。
+ * @author hebara
+ */
 import Vue from 'vue'
 import VeeValidate from 'vee-validate'
 import ja from 'vee-validate/dist/locale/ja'
@@ -7,10 +12,7 @@ import Constants from '../../constants/constant'
 
 Vue.use(VeeValidate)
 Vue.use(Constants)
-
 Vue.component('star-rating', StarRating)
-
-// vee-validateの日本語
 VeeValidate.Validator.localize('ja', ja)
 Vue.use(VeeValidate, { locale: 'ja' })
 
@@ -19,10 +21,10 @@ Vue.use(VeeValidate, { locale: 'ja' })
  */
 const messages = Constants.data().messageFormLunch
 /**
- * @param {Object} formAction - ランチ情報の操作
- * @param {Object} formAction.add - 追加
- * @param {Object} formAction.remove - 削除
- * @param {Object} formAction.edit - 編集
+ * @param {object} formAction - ランチ情報の操作
+ * @param {string} formAction.add - 追加
+ * @param {string} formAction.remove - 削除
+ * @param {string} formAction.edit - 編集
  */
 const formAction = {
   'add': 'add',
@@ -31,11 +33,11 @@ const formAction = {
 }
 
 /**
- * @param {Object} Lunch - ランチ情報オブジェクト
- * @param {String} Lunch.visitDate - 訪問日
- * @param {String} Lunch.storeName - 店舗名
- * @param {String} Lunch.url - お店のURL
- * @param {String} Lunch.rating - お店の評価
+ * @param {object} Lunch - ランチ情報オブジェクト
+ * @param {string} Lunch.visitDate - 訪問日
+ * @param {string} Lunch.storeName - 店舗名
+ * @param {string} Lunch.url - お店のURL
+ * @param {string} Lunch.rating - お店の評価
  */
 class Lunch {
   constructor () {
@@ -48,7 +50,7 @@ class Lunch {
   /**
    * 本日の日付を訪問日フォームの初期値に挿入できるフォーマットで返す
    *
-   * @returns {String} YYYY-MM-DD
+   * @return {string} YYYY-MM-DD
    */
   static today () {
     let date = new Date()
@@ -140,7 +142,7 @@ export default {
     /**
      * メッセージを表示する
      *
-     * @param {enum} action - enum: add, remove, edit
+     * @param {string} action - add, remove, edit
      */
     pushMessage: function (action) {
       const message = messages[action]
