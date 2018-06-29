@@ -33,7 +33,8 @@ const formAction = {
 }
 
 /**
- * @param {object} Lunch - ランチ情報オブジェクト
+ * ランチ情報クラス
+
  * @param {string} Lunch.visitDate - 訪問日
  * @param {string} Lunch.storeName - 店舗名
  * @param {string} Lunch.url - お店のURL

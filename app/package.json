@@ -101,7 +101,19 @@
     "destination": "./docs",
     "excludes": [ "(main|router/index)\\.js$" ],
     "plugins": [
-      {"name": "esdoc-standard-plugin"},
+      {
+        "name": "esdoc-standard-plugin",
+        "option": {
+          "manual": {
+            "index": "README.md",
+            "globalIndex": true,
+            "asset": "./manual/assets",
+            "files": [
+              "./manual/overview.md"
+            ]
+          }
+        }
+      },
       {"name": "esdoc-ecmascript-proposal-plugin", "option": {"all": true}}
     ]
   }
