@@ -9,13 +9,16 @@ jobs:
     steps:
       - checkout
       - run: # ビルド開始通知
-        name: Notification to Slack "Build Started"
-        command: |
-          curl -X POST $SLACK_WEBHOOK_URL \
-          -H 'content-type: application/json' \
-          -d '{
-            "text": "Build Started!"
-          }'
+          name: Notification to Slack "Build Started"
+          command: |
+            curl -X POST $SLACK_WEBHOOK_URL \
+            -H 'content-type: application/json' \
+            -d '{
+              "text": "Build Started!"
+            }'
       - run: #test
           name: test
           command: pwd
+      - run:
+          name: Unit Test
+          command: npm run unit --silent
