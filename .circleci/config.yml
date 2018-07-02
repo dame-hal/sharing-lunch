@@ -3,40 +3,23 @@ jobs:
   build:
     docker: # Dockerイメージの指定
       - image: damehal/devenv-vuecli
-
-    working_directory: sharing-lunch # カレントディレクトリの指定
-    
+    working_directory: /home/nodeuser/sharing-lunch # カレントディレクトリの指定
     environment:
       - SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
-
     steps:
       - checkout
       - run: # ビルド開始通知
-          name: Notification to Slack "Build Started"
-          command: |
-                curl -X POST $SLACK_WEBHOOK_URL \
-                -H 'content-type: application/json' \
-                -d '{
-                  "text": "Build Started!"
-                }'
+        name: Notification to Slack "Build Started"
+        command: |
+          curl -X POST $SLACK_WEBHOOK_URL \
+          -H 'content-type: application/json' \
+          -d '{
+            "text": "Build Started!"
+          }'
+
+      - run: #test
+        command: pwd
 
       - run:
-          name: Test echo
-          command: echo 'hello CircleCI'
-
-      # Download and cache dependencies
-#      - restore_cache:
-#          keys:
-#          - v1-dependencies-{{ checksum "package.json" }}
-#          # fallback to using the latest cache if no exact match is found
-#          - v1-dependencies-
-#
-#      - run: yarn install
-#
-#      - save_cache:
-#          paths:
-#            - node_modules
-#          key: v1-dependencies-{{ checksum "package.json" }}
-#
-#      # run tests!
-#      - run: yarn test
+        name: Unit Test
+        command: npm run unit --silent
