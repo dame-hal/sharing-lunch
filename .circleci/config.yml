@@ -3,7 +3,7 @@ jobs:
   build:
     docker: # Dockerイメージの指定
       - image: damehal/devenv-vuecli
-    working_directory: sharing-lunch # カレントディレクトリの指定
+    working_directory: /home/nodeuser/sharing-lunch # カレントディレクトリの指定
     environment:
       - SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
     steps:
@@ -17,8 +17,5 @@ jobs:
             "text": "Build Started!"
           }'
       - run: #test
+        name: test
         command: pwd
-      - run:
-        name: Unit Test
-        command: npm run unit --silent
-
