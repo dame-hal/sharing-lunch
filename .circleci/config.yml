@@ -21,4 +21,6 @@ jobs:
           command: pwd
       - run:
           name: Unit Test
-          command: npm run unit --silent
+          command: |
+            npm install
+            npm run unit --silent
