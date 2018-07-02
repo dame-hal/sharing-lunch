@@ -17,10 +17,12 @@ jobs:
               "text": "Build Started!"
             }'
       - run: #test
-          name: test
-          command: pwd
+          name: checkout
+          command: |
+            pwd \
+            ls -la
       - run:
           name: Unit Test
           command: |
-            npm install
+            npm install \
             npm run unit --silent
