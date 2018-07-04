@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  npm-test:
+  build:
     docker: # 利用するDockerイメージの指定
       - image: damehal/devenv-vuecli
     working_directory: /home/nodeuser/sharing-lunch/app # カレントディレクトリの指定
