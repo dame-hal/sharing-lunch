@@ -17,19 +17,11 @@ jobs:
             }'
       - checkout
       - run:
-          name: チェックディレクトリ
-          command: pwd
-      - run:
-          name: ファイル一覧
-          command: ls -la
-      - run:
           name: npm install
-          command: |
-            pwd \
-            ls -la \
-            cat package.json \
-            npm install
-            npm run unit --silent
+          command: npm install
+  test:
+    steps:
+      - checkout
       - run:
           name: Unit Test
           command: npm run unit --silent
