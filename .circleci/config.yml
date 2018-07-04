@@ -1,19 +1,19 @@
 version: 2
 jobs:
-  build:
-    docker: # Dockerイメージの指定
+  npm-test:
+    docker: # 利用するDockerイメージの指定
       - image: damehal/devenv-vuecli
     working_directory: /home/nodeuser/sharing-lunch/app # カレントディレクトリの指定
     environment:
       - SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
     steps:
       - run: # ビルド開始通知
-          name: Notification to Slack "Build Started"
+          name: Notification to Slack "Started Test"
           command: |
             curl -X POST $SLACK_WEBHOOK_URL \
             -H 'content-type: application/json' \
             -d '{
-              "text": "Build Started!"
+              "text": "Started Test!"
             }'
       - checkout
       - run:
@@ -24,7 +24,12 @@ jobs:
           command: ls -la
       - run:
           name: npm install
-          command: npm install
+          command: |
+            pwd
+            ls -la
+            cat package.json
+            npm install
+            npm run unit --silent
       - run:
           name: Unit Test
-          command: npm run unit --silent
+          command:
