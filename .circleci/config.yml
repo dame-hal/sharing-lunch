@@ -8,14 +8,23 @@ jobs:
       - SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
     steps:
       - run: # ビルド開始通知
-          name: Notification to Slack "Started Test"
+          name: Notification to Slack "Started Build"
           command: |
             curl -X POST $SLACK_WEBHOOK_URL \
             -H 'content-type: application/json' \
             -d '{
-              "text": "Started Test!"
+              "text": "Started Buld!"
             }'
       - checkout
+      - run:
+          name: チェックディレクトリ
+          command: pwd
+      - run:
+          name: ファイル一覧
+          command: ls -la
+      - run:
+          name: npm install
+          command: npm install
       - run:
           name: Unit Test
           command: npm run unit --silent
