@@ -17,11 +17,5 @@ jobs:
             }'
       - checkout
       - run:
-          name: npm install
-          command: npm install
-  test:
-    steps:
-      - checkout
-      - run:
           name: Unit Test
           command: npm run unit --silent
