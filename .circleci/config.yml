@@ -16,9 +16,8 @@ jobs:
               "text": "Started Buld!"
             }'
       - checkout
+      - run: cd app
+      - run: npm install
       - run:
-          name: npm install
-          command: npm install
-      - run:
-          name: Unit Test
+          name: Testing - Unit
           command: npm run unit
